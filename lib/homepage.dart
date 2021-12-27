@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:full_webview/check_internet.dart';
-
+import 'dart:io';
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
@@ -59,6 +59,54 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
       ),
 
+        drawer : Drawer(
+          // Add a ListView to the drawer. This ensures the user can scroll
+          // through the options in the drawer if there isn't enough vertical
+          // space to fit everything.
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text('Carnival Check Point'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.build),
+                title: const Text('Configuration'),
+                onTap: () {
+                  // Update the state of the app.
+
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.info),
+                title: const Text('About'),
+                onTap: () {
+                  // Update the state of the app.
+
+                  Navigator.pop(context);
+
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text('Exit'),
+                onTap: () {
+                  if (Platform.isAndroid) {
+                    SystemNavigator.pop();
+                  } else if (Platform.isIOS) {
+                    exit(0);
+                  }
+
+                },
+              ),
+            ],
+          ),
+        ),
 
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
